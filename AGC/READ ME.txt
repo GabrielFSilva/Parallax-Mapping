@@ -1,0 +1,13 @@
+Parallax Mapping - Gabriel Fonseca Silva
+
+O projeto foi criado a partir do modelo base que foi fornecido em aula.
+Nesse zip estão tanto os código/bibliotecas que vieram no pacote quanto o projeto do parallax.
+O projeto se encontra em "AGC/src/hellot/".
+
+Status do projeto:
+
+Consegui carregar com sucesso as  e aplicar um normal mapping basico. 
+Porém quando parti para a programação direta do parallax encontro erros na visualização,
+provavelmente erros na conversão do espaço mundo para o espaço tangencial.
+
+O trabalho esta incompleto, acredito que mais uma semana  é o suficiente para que ele fique completo.
