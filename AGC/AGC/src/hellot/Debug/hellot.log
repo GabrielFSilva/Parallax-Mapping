@@ -1,16 +1,16 @@
-﻿Build started 01/12/2014 08:50:21.
-     1>Project "C:\Users\Pelôn\Desktop\Exercício Arquiteturas\AGC\AGC\src\hellot\hellot.vcxproj" on node 2 (Build target(s)).
+﻿Build started 08/12/2014 03:03:56.
+     1>Project "C:\Users\Pelôn\Documents\GitHub\Parallax-Mapping\AGC\AGC\src\hellot\hellot.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /I..\..\common\include /ZI /nologo /W1 /WX- /Od /Oy- /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt main.cpp
          main.cpp
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Pelôn\Desktop\Exercício Arquiteturas\AGC\AGC\src\hellot\Debug\hellot.exe" /INCREMENTAL /NOLOGO /LIBPATH:..\..\common\msvc110 opengl32.lib glew32.lib glfw3.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /PDB:"C:\Users\Pelôn\Desktop\Exercício Arquiteturas\AGC\AGC\src\hellot\Debug\hellot.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Pelôn\Desktop\Exercício Arquiteturas\AGC\AGC\src\hellot\Debug\hellot.lib" /MACHINE:X86 Debug\gl_utils.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Pelôn\Documents\GitHub\Parallax-Mapping\AGC\AGC\src\hellot\Debug\hellot.exe" /INCREMENTAL /NOLOGO /LIBPATH:..\..\common\msvc110 opengl32.lib glew32.lib glfw3.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /PDB:"C:\Users\Pelôn\Documents\GitHub\Parallax-Mapping\AGC\AGC\src\hellot\Debug\hellot.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Pelôn\Documents\GitHub\Parallax-Mapping\AGC\AGC\src\hellot\Debug\hellot.lib" /MACHINE:X86 Debug\gl_utils.obj
          Debug\main.obj
          Debug\maths_funcs.obj
          Debug\stb_image.obj
-         hellot.vcxproj -> C:\Users\Pelôn\Desktop\Exercício Arquiteturas\AGC\AGC\src\hellot\Debug\hellot.exe
-     1>Done Building Project "C:\Users\Pelôn\Desktop\Exercício Arquiteturas\AGC\AGC\src\hellot\hellot.vcxproj" (Build target(s)).
+         hellot.vcxproj -> C:\Users\Pelôn\Documents\GitHub\Parallax-Mapping\AGC\AGC\src\hellot\Debug\hellot.exe
+     1>Done Building Project "C:\Users\Pelôn\Documents\GitHub\Parallax-Mapping\AGC\AGC\src\hellot\hellot.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:01.24
+Time Elapsed 00:00:01.21

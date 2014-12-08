@@ -10,6 +10,9 @@ uniform sampler2D textureDiffuse;
 uniform sampler2D textureNormal;
 uniform sampler2D textureHeight;
 
+//Parallax info
+uniform vec2 scaleBias;
+
 //exit color
 out vec4 frag_colour;
 
@@ -25,41 +28,39 @@ uniform float materialShininess;
 
 void main() 
 {
-	//variabels for the parallax
-	float scale = 1.0f;
-	float bias = 0.15f;
-
 	//texture coor after parallax
 	vec2 newTexCoord;
 	
-	vec3 h = normalize(viewTangentSpace);
-
-	//hight calc
+	//height calc
 	float height = texture2D(textureHeight, textureCoordinates).r;
-	height = height * scale + bias;
+	height = height * scaleBias.x + scaleBias.y;
+	
+	//find the new texCoords
+	vec3 h = normalize(viewTangentSpace);
     newTexCoord = textureCoordinates + (height * h.xy);
-
-	//new normals based on the parallax
-	vec3 n = normalize(texture2D(textureNormal, newTexCoord).rgb * 2.0 );
-    vec3 l = normalize(lightTangentSpace);
-
-	float nDotL = max(0.0, dot(n, l));
-    float nDotH = max(0.0, dot(n, h));
-
-	float power;
 	
-	if(nDotL == 0){
-		power = 0.0;
-	} else {
-		pow(nDotH, materialShininess);
-	}
-
-	//Light Calc
-	vec4 ambient = materialAmbient;
-    vec4 diffuse = materialDiffuse * nDotL;
-    vec4 specular = materialSpecular * power;
-    vec4 color = ambient + diffuse + specular;
+	//normals converted to the tangent space
+	vec3 normal_tan = texture (textureNormal,newTexCoord).rgb;
+	normal_tan = normalize (normal_tan * 2.0 - 1.0);
 	
-	frag_colour = texture2D(textureDiffuse, newTexCoord);
-	//frag_colour = color * texture2D(textureDiffuse, newTexCoord);
+	//------- Light Calculation in Tanget Space --------//
+	//Ambient
+	vec3 Ia = materialAmbient.xyz;
+	
+	//Diffuse
+	vec3 direction_to_light_tan = normalize (-lightTangentSpace);
+	float dot_prod = dot (direction_to_light_tan, normal_tan);
+	dot_prod = max (dot_prod, 0.0);
+	vec3 Id = materialDiffuse.xyz * dot_prod;
+
+	//Specular
+	vec3 reflection_tan = reflect (normalize (lightTangentSpace), normal_tan);
+	float dot_prod_specular = dot (reflection_tan, normalize (viewTangentSpace));
+	dot_prod_specular = max (dot_prod_specular, 0.0);
+	float specular_factor = pow (dot_prod_specular, materialShininess);
+	vec3 Is = materialSpecular.xyz * specular_factor;
+
+	//----- Output -------/
+	frag_colour.rgb = (Is + Id + Ia) * texture2D(textureDiffuse, newTexCoord).xyz;
+	frag_colour.a = 1.0;
 }

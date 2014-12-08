@@ -82,15 +82,29 @@ int main () {
 
 	//VBOs
 	GLfloat points[] = {
-		-0.5f, -0.5f,  0.0f,
+		-1.0f, -0.5f,  0.0f,
+		0.0f, -0.5f,  0.0f,
+		0.0f,  0.5f,  0.0f,
+		0.0f,  0.5f,  0.0f,
+		-1.0f,  0.5f,  0.0f,
+		-1.0f, -0.5f,  0.0f,
 		0.5f, -0.5f,  0.0f,
-		0.5f,  0.5f,  0.0f,
-		0.5f,  0.5f,  0.0f,
-		-0.5f,  0.5f,  0.0f,
-		-0.5f, -0.5f,  0.0f
+		1.5f, -0.5f,  0.0f,
+		1.5f, 0.5f,  0.0f,
+		1.5f, 0.5f,  0.0f,
+		0.5f, 0.5f,  0.0f,
+		0.5f, -0.5f,  0.0f
 	};
+
+
 	
 	GLfloat normals[] = {
+		0.0f, 0.0f, 1.0f,
+		0.0f, 0.0f, 1.0f,
+		0.0f, 0.0f, 1.0f,
+		0.0f, 0.0f, 1.0f,
+		0.0f, 0.0f, 1.0f,
+		0.0f, 0.0f, 1.0f,
 		0.0f, 0.0f, 1.0f,
 		0.0f, 0.0f, 1.0f,
 		0.0f, 0.0f, 1.0f,
@@ -105,6 +119,12 @@ int main () {
 		1.0f, 1.0f,
 		1.0f, 1.0f,
 		0.0f, 1.0f,
+		0.0f, 0.0f,
+		0.0f, 0.0f,
+		1.0f, 0.0f,
+		1.0f, 1.0f,
+		1.0f, 1.0f,
+		0.0f, 1.0f,
 		0.0f, 0.0f
 	};
 
@@ -114,36 +134,45 @@ int main () {
 		1.0f, 0.0f, 0.0f, 1.0f,
 		1.0f, 0.0f, 0.0f, 1.0f,
 		1.0f, 0.0f, 0.0f, 1.0f,
+		1.0f, 0.0f, 0.0f, 1.0f,
+		1.0f, 0.0f, 0.0f, 1.0f,
+		1.0f, 0.0f, 0.0f, 1.0f,
+		1.0f, 0.0f, 0.0f, 1.0f,
+		1.0f, 0.0f, 0.0f, 1.0f,
+		1.0f, 0.0f, 0.0f, 1.0f,
 		1.0f, 0.0f, 0.0f, 1.0f
 	};
 	
 	//Material set
-	GLfloat mat_ambient[] = {0.0f, 0.0f, 0.0f, 1.0f};
-	GLfloat mat_difuse[] = {1.0f, 1.0f, 1.0f, 1.0f};
+	GLfloat mat_ambient[] = {0.2f, 0.2f, 0.2f, 1.0f};
+	GLfloat mat_difuse[] = {0.7f, 0.7f, 0.7f, 1.0f};
 	GLfloat mat_specular[] = {1.0f, 1.0f, 1.0f, 1.0f};
-	GLfloat mat_shininess = 1.0;
+	GLfloat mat_shininess = 500.0;
 
 	//Light set
 	GLfloat light_position[] = { 0.0f, 0.0f, 2.0f};
 	GLfloat light_intensity[] = {1.0f, 1.0f, 1.0f};
 
+	//Parallax Variables
+	GLfloat scale_bias[] = { -0.1f, 0.05f};
+
 	//Set the VBOs and the VAO
 	GLuint points_vbo;
 	glGenBuffers (1, &points_vbo);
 	glBindBuffer (GL_ARRAY_BUFFER, points_vbo);
-	glBufferData (GL_ARRAY_BUFFER, 18 * sizeof (GLfloat), points, GL_STATIC_DRAW);
+	glBufferData (GL_ARRAY_BUFFER, 36 * sizeof (GLfloat), points, GL_STATIC_DRAW);
 	GLuint texcoords_vbo;
 	glGenBuffers (1, &texcoords_vbo);
 	glBindBuffer (GL_ARRAY_BUFFER, texcoords_vbo);
-	glBufferData (GL_ARRAY_BUFFER, 12 * sizeof (GLfloat), texcoords, GL_STATIC_DRAW);
+	glBufferData (GL_ARRAY_BUFFER, 24 * sizeof (GLfloat), texcoords, GL_STATIC_DRAW);
 	GLuint normal_vbo;
 	glGenBuffers (1, &normal_vbo);
 	glBindBuffer (GL_ARRAY_BUFFER, normal_vbo);
-	glBufferData (GL_ARRAY_BUFFER, 18 * sizeof (GLfloat), normals, GL_STATIC_DRAW);
+	glBufferData (GL_ARRAY_BUFFER, 36 * sizeof (GLfloat), normals, GL_STATIC_DRAW);
 	GLuint tangent_vbo;
 	glGenBuffers (1, &tangent_vbo);
 	glBindBuffer (GL_ARRAY_BUFFER, tangent_vbo);
-	glBufferData (GL_ARRAY_BUFFER, 24 * sizeof (GLfloat), tangents, GL_STATIC_DRAW);
+	glBufferData (GL_ARRAY_BUFFER, 48 * sizeof (GLfloat), tangents, GL_STATIC_DRAW);
 		
 	GLuint vao;
 	glGenVertexArrays (1, &vao);
@@ -163,7 +192,9 @@ int main () {
 	glEnableVertexAttribArray (3);
 	
 	//Load the Shadders
+	//GLuint shader_programme = create_programme_from_files ("NormalMappingVertexShader.glsl", "NormalMappingFragmentShader.glsl");
 	GLuint shader_programme = create_programme_from_files ("ParallaxVertexShader.glsl", "ParallaxFragmentShader.glsl");
+	
 
 	//Set Up the camera
 	#define ONE_DEG_IN_RAD (2.0 * M_PI) / 360.0 
@@ -205,6 +236,8 @@ int main () {
 	//Light
 	int light_position_location = glGetUniformLocation (shader_programme, "lightPosition");
 	int light_intensity_location = glGetUniformLocation (shader_programme, "lightIntensity");
+	//Parallax Info
+	int scale_bias_location = glGetUniformLocation (shader_programme, "scaleBias");
 	//Material
 	int material_ambient_location = glGetUniformLocation (shader_programme, "materialAmbient");
 	int material_difuse_location = glGetUniformLocation (shader_programme, "materialDiffuse");
@@ -216,7 +249,7 @@ int main () {
 	int tex_b_location = glGetUniformLocation (shader_programme, "textureNormal");
 	//assert (tex_b_location > -1);
 	int tex_c_location = glGetUniformLocation (shader_programme, "textureHeight");
-	assert (tex_c_location > -1);
+	//assert (tex_c_location > -1);
 
 	glUseProgram (shader_programme);
 	//Matrix
@@ -227,6 +260,8 @@ int main () {
 	//Light
 	glUniform3fv(light_position_location, 1, light_position);
 	glUniform3fv(light_intensity_location, 1, light_intensity);
+	//Parallax Info
+	glUniform2fv(scale_bias_location, 1 , scale_bias);
 	//Material
 	glUniform4fv(material_ambient_location, 1, mat_ambient);
 	glUniform4fv(material_difuse_location, 1, mat_difuse);
@@ -261,7 +296,7 @@ int main () {
 		
 		glUseProgram (shader_programme);
 		glBindVertexArray (vao);
-		glDrawArrays (GL_TRIANGLES, 0, 6);
+		glDrawArrays (GL_TRIANGLES, 0, 12);
 		glfwPollEvents ();
 		
 		// control keys
@@ -309,23 +344,29 @@ int main () {
 		if (GLFW_PRESS == glfwGetKey (g_window, GLFW_KEY_ESCAPE)) {
 			glfwSetWindowShouldClose (g_window, 1);
 		}
+
+		// parallax parameter control
+		if (glfwGetKey (g_window, GLFW_KEY_R)) {
+			scale_bias[0] = -0.1f;
+			scale_bias[1] = 0.05f;
+			glUniform2fv(scale_bias_location, 1, scale_bias);
+		}
+		if (glfwGetKey (g_window, GLFW_KEY_T)) {
+			scale_bias[0] += 0.01f;
+			glUniform2fv(scale_bias_location, 1, scale_bias);
+		}
+		if (glfwGetKey (g_window, GLFW_KEY_G)) {
+			scale_bias[0] -= 0.01f;
+			glUniform2fv(scale_bias_location, 1, scale_bias);
+		}
+		if (glfwGetKey (g_window, GLFW_KEY_Y)) {
+			scale_bias[1] += 0.01f;
+			glUniform2fv(scale_bias_location, 1, scale_bias);
+		}
 		if (glfwGetKey (g_window, GLFW_KEY_H)) {
-			light_position[0] -= 0.01f;
-			glUniform3fv(light_position_location, 1, light_position);
+			scale_bias[1] -= 0.01f;
+			glUniform2fv(scale_bias_location, 1, scale_bias);
 		}
-		if (glfwGetKey (g_window, GLFW_KEY_K)) {
-			light_position[0] += 0.01f;
-			glUniform3fv(light_position_location, 1, light_position);
-		}
-		if (glfwGetKey (g_window, GLFW_KEY_U)) {
-			light_position[1] += 0.01f;
-			glUniform3fv(light_position_location, 1, light_position);
-		}
-		if (glfwGetKey (g_window, GLFW_KEY_J)) {
-			light_position[1] += -0.01f;
-			glUniform3fv(light_position_location, 1, light_position);
-		}
-		
 		glfwSwapBuffers (g_window);
 	}
 	
